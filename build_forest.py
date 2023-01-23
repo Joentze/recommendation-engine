@@ -2,7 +2,8 @@ import pickle
 import pandas as pd
 from datasketch import MinHash, MinHashLSHForest
 import time
-from main import preprocess
+from preprocess import preprocess
+from configs import PERMUTATIONS, CSV_PATH, FOREST_NAME
 
 def build_forest(data, perms:int):    
     start_time = time.time()    
@@ -39,9 +40,9 @@ def save_forest_obj_in_bin(pickle_filename:str, forest_obj):
 
 def build_forest_file(filename:str, pickle_filename: str):
     data = preprocess_dataframe(filename)
-    forest = build_forest(data, 128)
+    forest = build_forest(data, PERMUTATIONS)
     save_forest_obj_in_bin(pickle_filename, forest)
 
 
 if __name__ == "__main__":
-    pass
+    build_forest_file(CSV_PATH, FOREST_NAME)
